@@ -8,7 +8,7 @@ enum Op {
     Term,
 }
 
-fn load_data() -> Rc<Vec<Op>> {
+fn load_data() -> Rc<[Op]> {
     let mut program = crate::util::data_lines(8)
         .map(|line| {
             use std::str::FromStr as _;
@@ -26,14 +26,14 @@ fn load_data() -> Rc<Vec<Op>> {
         })
         .collect::<Vec<_>>();
     program.push(Op::Term);
-    Rc::new(program)
+    program.into()
 }
 
 struct State {
     pc: isize,
     acc: isize,
     visited: std::collections::HashSet<isize>,
-    program: Rc<Vec<Op>>,
+    program: Rc<[Op]>,
     tweaked_address: Option<isize>,
 }
 
@@ -49,7 +49,7 @@ enum PostRun {
 }
 
 impl State {
-    fn new(program: Rc<Vec<Op>>) -> Self {
+    fn new(program: Rc<[Op]>) -> Self {
         State {
             pc: 0,
             acc: 0,

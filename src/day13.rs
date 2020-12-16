@@ -4,7 +4,7 @@ pub fn part1() {
     let mut lines = crate::util::data_lines(13);
     let time = <usize as std::str::FromStr>::from_str(&lines.next().unwrap()).unwrap();
     let busses = lines.next().unwrap();
-    let busses: HashSet::<_> = busses.split(",").filter(|bus| *bus != "x").map(<usize as std::str::FromStr>::from_str).map(Result::unwrap).collect();
+    let busses: HashSet::<_> = busses.split(',').filter(|bus| *bus != "x").map(<usize as std::str::FromStr>::from_str).map(Result::unwrap).collect();
     let (id, to_wait) = busses.iter().map(|id| (id, id - (time % id))).min_by_key(|(_id, to_wait)| *to_wait).unwrap();
     println!("Day 13, Part 1: {}", id * to_wait);
 }
@@ -55,7 +55,7 @@ pub fn part2() {
     let mut lines = crate::util::data_lines(13);
     let _ = lines.next().unwrap(); // Ignore the first line
     let busses = lines.next().unwrap();
-    let busses = busses.split(",").map(|id| -> Option<i128> {
+    let busses = busses.split(',').map(|id| -> Option<i128> {
         if id == "x" {
             None
         } else {

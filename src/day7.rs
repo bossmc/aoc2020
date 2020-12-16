@@ -6,18 +6,18 @@ struct Trees {
 }
 
 fn load_data() -> Trees {
-    let mut backward = HashMap::new();
+    let mut backward = HashMap::<_, HashSet<_>>::new();
     let forward = crate::util::data_lines(7).map(|line| {
         let (outer, rest) = <str as crate::util::StrExt>::split_once(&line, " bags contain ");
         if rest == "no other bags." {
             (outer.to_string(), HashSet::new())
         } else {
-            let rest = rest.trim_end_matches(".");
+            let rest = rest.trim_end_matches('.');
             let inner = rest.split(", ").map(|term| {
-                let term = term.trim_end_matches("s");
+                let term = term.trim_end_matches('s');
                 let term = term.trim_end_matches(" bag");
                 let (count, colour) = <str as crate::util::StrExt>::split_once(term, " ");
-                backward.entry(colour.to_string()).or_insert_with(|| HashSet::new()).insert(outer.to_string());
+                backward.entry(colour.to_string()).or_default().insert(outer.to_string());
                 (<usize as std::str::FromStr>::from_str(count).unwrap(), colour.to_string())
             }).collect();
             (outer.to_string(), inner)
