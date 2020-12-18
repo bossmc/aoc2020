@@ -10,13 +10,13 @@ struct PasswordEntry {
 impl PasswordEntry {
     fn validate_old(&self) -> bool {
         let occurrences = self.data.chars().filter(|c| *c == self.letter).count();
-        return (self.low <= occurrences) && (occurrences <= self.high)
+        (self.low <= occurrences) && (occurrences <= self.high)
     }
 
     fn validate_new(&self) -> bool {
         let first = self.data.chars().nth(self.low - 1).unwrap();
         let second = self.data.chars().nth(self.high - 1).unwrap();
-        return (first == self.letter) ^ (second == self.letter);
+        (first == self.letter) ^ (second == self.letter)
     }
 }
 

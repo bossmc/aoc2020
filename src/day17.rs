@@ -194,5 +194,5 @@ pub fn part2() {
         automaton.step();
     }
 
-    println!("Day 17, Part 1: {}", automaton.count_active());
+    println!("Day 17, Part 2: {}", automaton.count_active());
 }
